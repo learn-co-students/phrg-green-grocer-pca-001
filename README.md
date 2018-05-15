@@ -1,5 +1,14 @@
+# Pairing Project
+
+## The Plan
+
+This pairing lab does not have a designated place to switch drivers. Instead, every 30 minutes the pair's responsibilities should swap. The driver becomes the navigator, and vice versa.
+
+To minimize extra cloning and forking, this project should be completed in only one person's Github account.
+
 ## Objectives
-Create a checkout method to calculate the total cost of a cart of items and apply discounts and coupons as necessary.
+
+Create a `checkout` method to calculate the total cost of a cart of items and apply discounts and coupons as necessary.
 
 Dr. Steve Bruhle, your green grocer, isn't ready, but you are!
 
@@ -109,5 +118,3 @@ Named parameters give you more expressive code since you are specifying what eac
 ## Reward
 
 * [Dr. Brule](http://www.adultswim.com/videos/tim-and-eric-awesome-show-great-job/dr-brule-your-green-grocer/)
-
-<p data-visibility='hidden'>View <a href='https://learn.co/lessons/green_grocer'>Green Grocer</a> on Learn.co and start learning to code for free.</p>
