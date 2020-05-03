@@ -114,7 +114,3 @@ Named parameters give you more expressive code since you are specifying what eac
 ## Resources
 
 * [Named Parameters](https://robots.thoughtbot.com/ruby-2-keyword-arguments)
-
-## Reward
-
-* [Dr. Brule](http://www.adultswim.com/videos/tim-and-eric-awesome-show-great-job/dr-brule-your-green-grocer/)
