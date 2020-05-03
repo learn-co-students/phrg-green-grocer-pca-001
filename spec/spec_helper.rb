@@ -4,17 +4,9 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require_relative '../grocer.rb'
-
+require "pry"
+require_relative "../grocer.rb"
 
 RSpec.configure do |config|
   # config here
-end
-
-def find_item(name)
-  items.find { |item| item[name] }
-end
-
-def find_coupon(name)
-  coupons.find { |coupon| coupon[:item] == name }
 end
