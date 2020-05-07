@@ -6,13 +6,11 @@ def consolidate_cart(cart)
 
     # pull item info from existing results
     result_for_current_item = result[key]
-    if result_for_current_item
-      current_count = result_for_current_item[:count]
+    attributes[:count] = 1 + if result_for_current_item
+      result_for_current_item[:count]
     else
-      current_count = 0
+      0
     end
-# save it to results
-    attributes[:count] = current_count + 1
     result[key] = attributes
   end
 end
@@ -27,42 +25,37 @@ def apply_coupons(cart, coupons)
     cart_item = cart[coupon_item]
     cart_item_count = cart_item[:count] if cart_item
 
-    if (cart.key? coupon_item) && (coupon_num <= cart_item_count)
-      # update original item count in cart
-      cart_item[:count] = cart_item_count - coupon_num
+    next unless (cart.key? coupon_item) && (coupon_num <= cart_item_count)
 
-      # see if coupon item exists already
-      coupon_item_key = coupon_item + " W/COUPON"
-      cart_coupon_item = cart[coupon_item_key] || { price: cost, :clearance => cart_item[:clearance], :count => 0}
+    # update original item count in cart
+    cart_item[:count] = cart_item_count - coupon_num
 
-      cart_coupon_item[:count] += 1
-      cart[coupon_item_key] = cart_coupon_item
-    end
+    # see if coupon item exists already
+    coupon_item_key = coupon_item + " W/COUPON"
+    cart_coupon_item = cart[coupon_item_key] || { price: cost, :clearance => cart_item[:clearance], :count => 0}
+
+    cart_coupon_item[:count] += 1
+    cart[coupon_item_key] = cart_coupon_item
   end
   cart
 end
 
 def apply_clearance(cart)
-  cart.each do |item, attributes| 
-
+  cart.each do |item, attributes|
     if attributes[:clearance] == true
       attributes[:price] = (attributes[:price] * 0.8).round(2)
     end
-  end   
+  end
 end
 
 def checkout(cart, coupons)
   cart = consolidate_cart(cart)
   apply_coupons(cart, coupons)
   apply_clearance(cart)
-  total = 0.0
 
-  cart.each do |item, attributes|
-    total = (attributes[:price] * attributes[:count]) + total
+  total = cart.inject(0) do |sum, (item, attributes)|
+    sum + (attributes[:price] * attributes[:count])
   end
-  if total > 100
-    total * 0.9
-  else
-    total
-  end
+
+  total > 100 ? total * 0.9 : total
 end
