@@ -87,9 +87,7 @@ describe "Grocer" do
         cart = Array.new(5, cheese)
         consolidated_cart = consolidate_cart(cart)
         cheese_coupon = find_coupon("CHEESE")
-
         cheese_result = apply_coupons(consolidated_cart, [cheese_coupon])
-
         expect(cheese_result["CHEESE"][:price]).to eq(6.50)
         expect(cheese_result["CHEESE"][:count]).to eq(2)
         expect(cheese_result["CHEESE W/COUPON"][:price]).to eq(15.00)
