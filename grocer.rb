@@ -1,9 +1,22 @@
+require "pry"
+
 def consolidate_cart(cart)
-  # code here
+  cart_hash = {}
+  cart.each do |hash|
+    if cart_hash.key?(hash.keys[0])
+      cart_hash[hash.keys[0]][:count] += 1
+    else
+      hash.each do |key, value|
+        value[:count] = 1
+        cart_hash[key] = value
+      end
+    end
+  end
+  cart_hash
 end
 
 def apply_coupons(cart, coupons)
-  # code here
+
 end
 
 def apply_clearance(cart)
