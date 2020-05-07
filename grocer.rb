@@ -25,9 +25,9 @@ def apply_coupons(cart, coupons)
 
     # item in the cart that matches coupon
     cart_item = cart[coupon_item]
-    cart_item_count = cart_item[:count]
+    cart_item_count = cart_item[:count] if cart_item
 
-    if cart.key? coupon_item && coupon_num <= cart_item_count
+    if (cart.key? coupon_item) && (coupon_num <= cart_item_count)
       # update original item count in cart
       cart_item[:count] = cart_item_count - coupon_num
 
@@ -43,9 +43,26 @@ def apply_coupons(cart, coupons)
 end
 
 def apply_clearance(cart)
-  # code here
+  cart.each do |item, attributes| 
+
+    if attributes[:clearance] == true
+      attributes[:price] = (attributes[:price] * 0.8).round(2)
+    end
+  end   
 end
 
 def checkout(cart, coupons)
-  # code here
+  cart = consolidate_cart(cart)
+  apply_coupons(cart, coupons)
+  apply_clearance(cart)
+  total = 0.0
+
+  cart.each do |item, attributes|
+    total = (attributes[:price] * attributes[:count]) + total
+  end
+  if total > 100
+    total * 0.9
+  else
+    total
+  end
 end
