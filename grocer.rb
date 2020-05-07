@@ -18,7 +18,7 @@ end
 def apply_coupons(cart, coupons)
   coupons.each do |coupon_item|
     name = coupon_item[:item]
-    if cart.key?(name)
+    if cart.key?(name) && coupon_item[:num] <= cart[name][:count]
       coup_name = name + " W/COUPON"
       cart[name][:count] -= coupon_item[:num]
       if cart.key?(coup_name)
@@ -46,4 +46,12 @@ end
 
 def checkout(cart, coupons)
   # code here
+  total = 0
+  consolidate = consolidate_cart(cart)
+  cart_with_coupons = apply_coupons(consolidate, coupons)
+  clearance_cart = apply_clearance(cart_with_coupons)
+  clearance_cart.each do |_key, value|
+    total += value[:price] * value[:count]
+  end
+  total > 100.0 ? total *= 0.9 : total
 end
